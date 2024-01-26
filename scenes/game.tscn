@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/arrowButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://frames/seta_baixo.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://frames/seta_direita.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://frames/seta_esquerda.tres" type="SpriteFrames" id=4]
+[ext_resource path="res://scripts/game.gd" type="Script" id=5]
+[ext_resource path="res://scenes/conductor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/musics/song.ogg" type="AudioStream" id=7]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="SetaCima" parent="." instance=ExtResource( 1 )]
+position = Vector2( 460, 248 )
+input = "cima"
+
+[node name="SetaBaixo" parent="." instance=ExtResource( 1 )]
+position = Vector2( 564, 248 )
+frames = ExtResource( 2 )
+input = "baixo"
+
+[node name="SetaEsquerda" parent="." instance=ExtResource( 1 )]
+position = Vector2( 460, 352 )
+frames = ExtResource( 4 )
+input = "esquerda"
+
+[node name="SetaDireita" parent="." instance=ExtResource( 1 )]
+position = Vector2( 564, 352 )
+frames = ExtResource( 3 )
+input = "direita"
+
+[node name="Label" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Combo" type="Label" parent="."]
+margin_left = 1.0
+margin_top = 20.0
+margin_right = 41.0
+margin_bottom = 34.0
+
+[node name="Conductor" parent="." instance=ExtResource( 6 )]
+stream = ExtResource( 7 )
+volume_db = -15.0
+bpm = 115
+
+[connection signal="beat" from="Conductor" to="." method="_on_Conductor_beat"]
+[connection signal="measure" from="Conductor" to="." method="_on_Conductor_measure"]
