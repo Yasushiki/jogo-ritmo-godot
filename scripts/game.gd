@@ -19,7 +19,7 @@ var sec_per_beat = 60.0 / bpm
 # a quantidade de elementos desse array depende da métrica da música
 # a música de exemplo era 4x4 (eu acho), por isso ela só tinha 4
 # spawn_beat, como eu n sei sobre a nossa eu tô deixando mais genérico
-var spawn_beat = [0, 0, 2, 0]
+var spawn_beat = [0, 0, 1, 0]
 var spawn_beat_length = len(spawn_beat)
 
 var lane = 0
@@ -43,31 +43,31 @@ func _on_Conductor_beat(position):
 	song_position_in_beats = position
 	if song_position_in_beats > 36:
 		spawn_beat[0] = 0
-		spawn_beat[1] = 3
+		spawn_beat[1] = 1
 		spawn_beat[2] = 1
 		spawn_beat[3] = 0
 	if song_position_in_beats > 98:
-		spawn_beat[0] = 2
+		spawn_beat[0] = 1
 		spawn_beat[1] = 0
-		spawn_beat[2] = 0
+		spawn_beat[2] = 1
 		spawn_beat[3] = 0
 	if song_position_in_beats > 132:
-		spawn_beat[0] = 0
+		spawn_beat[0] = 1
 		spawn_beat[1] = 0
-		spawn_beat[2] = 0
+		spawn_beat[2] = 1
 		spawn_beat[3] = 0
 	if song_position_in_beats > 162:
 		spawn_beat[0] = 0
-		spawn_beat[1] = 2
+		spawn_beat[1] = 1
 		spawn_beat[2] = 1
 		spawn_beat[3] = 0
 	if song_position_in_beats > 194:
 		spawn_beat[0] = 0
 		spawn_beat[1] = 0
-		spawn_beat[2] = 2
-		spawn_beat[3] = 3
+		spawn_beat[2] = 1
+		spawn_beat[3] = 1
 	if song_position_in_beats > 228:
-		spawn_beat[0] = 0
+		spawn_beat[0] = 1
 		spawn_beat[1] = 0
 		spawn_beat[2] = 1
 		spawn_beat[3] = 0
@@ -75,25 +75,25 @@ func _on_Conductor_beat(position):
 		spawn_beat[0] = 1
 		spawn_beat[1] = 0
 		spawn_beat[2] = 0
-		spawn_beat[3] = 2
+		spawn_beat[3] = 1
 	if song_position_in_beats > 288:
 		spawn_beat[0] = 0
-		spawn_beat[1] = 3
+		spawn_beat[1] = 1
 		spawn_beat[2] = 0
 		spawn_beat[3] = 0
 	if song_position_in_beats > 322:
-		spawn_beat[0] = 3
+		spawn_beat[0] = 1
 		spawn_beat[1] = 0
-		spawn_beat[2] = 2
+		spawn_beat[2] = 1
 		spawn_beat[3] = 1
 	if song_position_in_beats > 388:
 		spawn_beat[0] = 1
 		spawn_beat[1] = 0
-		spawn_beat[2] = 0
+		spawn_beat[2] = 1
 		spawn_beat[3] = 0
 	if song_position_in_beats > 396:
 		spawn_beat[0] = 0
-		spawn_beat[1] = 2
+		spawn_beat[1] = 1
 		spawn_beat[2] = 0
 		spawn_beat[3] = 0
 	if song_position_in_beats > 404:
