@@ -27,7 +27,7 @@ margin_left = 12.0
 margin_top = 15.0
 margin_right = 69.0
 margin_bottom = 29.0
-text = "make me laugh"
+text = "Make me laugh"
 
 [node name="StartButton" type="Button" parent="."]
 anchor_left = 0.54
