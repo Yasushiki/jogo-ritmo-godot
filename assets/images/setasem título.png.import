@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/placeholder0.jpg-607ef8de254e6487e42ce69c98e8754d.stex"
+path="res://.import/setasem título.png-bcb5b937ba9bfb0da0f5da910f7042ce.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/placeholder0.jpg"
-dest_files=[ "res://.import/placeholder0.jpg-607ef8de254e6487e42ce69c98e8754d.stex" ]
+source_file="res://assets/images/setasem título.png"
+dest_files=[ "res://.import/setasem título.png-bcb5b937ba9bfb0da0f5da910f7042ce.stex" ]
 
 [params]
 
