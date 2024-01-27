@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://assets/musics/01.wav" type="AudioStream" id=1]
 [ext_resource path="res://scripts/Games.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Notes.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/images/PH FUNDO COM REI.png" type="Texture" id=4]
-[ext_resource path="res://assets/musics/Track 1 - Demo.wav" type="AudioStream" id=5]
 
 [node name="Game" type="Node"]
 script = ExtResource( 2 )
@@ -12,39 +12,44 @@ script = ExtResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
-expand = true
-stretch_mode = 1
 
-[node name="Control" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -960.0
-margin_top = -1080.0
-margin_right = 960.0
+[node name="Note0" parent="." instance=ExtResource( 3 )]
+position = Vector2( 754, 832 )
 
-[node name="Notes" parent="Control" instance=ExtResource( 3 )]
-position = Vector2( 736, 913 )
-speed = 1
+[node name="Note1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 852, 828 )
 
-[node name="Notes2" parent="Control" instance=ExtResource( 3 )]
-position = Vector2( 834, 915 )
-speed = 1
-animacao = "baixo"
+[node name="Note2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 956, 832 )
 
-[node name="Notes3" parent="Control" instance=ExtResource( 3 )]
-position = Vector2( 961, 925 )
-speed = 1
-animacao = "esquerda"
-
-[node name="Notes4" parent="Control" instance=ExtResource( 3 )]
-position = Vector2( 1096, 920 )
-speed = 1
-animacao = "direita"
+[node name="Note3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1058, 834 )
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
 autoplay = true
 
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Sound"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 890.0
+margin_top = 401.0
+margin_right = 966.0
+margin_bottom = 415.0
+text = "fvdfvdfvdfvd"
+
+[node name="DefaultControl" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+focus_mode = 2
+
+[node name="NoteTimer" type="Timer" parent="."]
+
 [connection signal="finished" from="BgMusic" to="." method="_on_BgMusic_finished"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]

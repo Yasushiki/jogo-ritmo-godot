@@ -1,22 +1,35 @@
-extends Area2D
+extends AnimatedSprite
 
-export var speed = 1
-export var animacao = "cima"
+var isListening = false
+var direction = -1
+#var streamPath = "res://assets/musics/"
 
-func _ready():
-	if animacao == "cima":
-		$AnimatedSprite.animation = "arrow"
-		$AnimatedSprite.rotation = 0
-	if animacao == "direita":
-		$AnimatedSprite.animation = "arrow"
-		$AnimatedSprite.rotation = PI / 2
-	if animacao == "baixo":
-		$AnimatedSprite.animation = "arrow"
-		$AnimatedSprite.rotation = PI
-	if animacao == "esquerda":
-		$AnimatedSprite.animation = "arrow"
-		$AnimatedSprite.rotation = -PI / 2
+func _unhandled_input(event):
+	if !event.is_action("seta") or self.animation != "idle":
+		isListening = false
+		return
 	
-
-func _on_Timer_timeout():
-	queue_free()
+	if !isListening:
+		return
+	
+	self.animation = "arrow"
+	
+	if event.is_action_pressed("cima", false):
+		self.rotation = 0
+		direction = 0
+#		$nS.stream = load(streamPath + "00.wav")
+	if event.is_action_pressed("direita", false):
+		self.rotation = PI / 2
+		direction = 1
+#		$nS.stream = load(streamPath + "10.wav")
+	if event.is_action_pressed("baixo", false):
+		self.rotation = PI
+		direction = 2
+#		$nS.stream = load(streamPath + "01.wav")
+	if event.is_action_pressed("esquerda", false):
+		self.rotation = -PI / 2
+		direction = 3
+#		$nS.stream = load(streamPath + "11.wav")
+	
+	isListening = false
+	
