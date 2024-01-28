@@ -1,0 +1,71 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://assets/images/booga/idle.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Booga.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/booga/miss/miss3.png" type="Texture" id=3]
+[ext_resource path="res://assets/images/booga/miss/miss4.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/booga/down/down5.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/booga/left/left3.png" type="Texture" id=6]
+[ext_resource path="res://assets/images/booga/up/up7.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/booga/up/up3.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/booga/right/right5.png" type="Texture" id=9]
+[ext_resource path="res://assets/images/booga/up/up6.png" type="Texture" id=10]
+[ext_resource path="res://assets/images/booga/up/up2.png" type="Texture" id=11]
+[ext_resource path="res://assets/images/booga/up/up4.png" type="Texture" id=12]
+[ext_resource path="res://assets/images/booga/right/right1.png" type="Texture" id=13]
+[ext_resource path="res://assets/images/booga/right/right2.png" type="Texture" id=14]
+[ext_resource path="res://assets/images/booga/miss/miss2.png" type="Texture" id=15]
+[ext_resource path="res://assets/images/booga/up/up1.png" type="Texture" id=16]
+[ext_resource path="res://assets/images/booga/miss/miss1.png" type="Texture" id=17]
+[ext_resource path="res://assets/images/booga/down/down2.png" type="Texture" id=18]
+[ext_resource path="res://assets/images/booga/down/down1.png" type="Texture" id=19]
+[ext_resource path="res://assets/images/booga/left/left2.png" type="Texture" id=20]
+[ext_resource path="res://assets/images/booga/down/down3.png" type="Texture" id=21]
+[ext_resource path="res://assets/images/booga/down/down4.png" type="Texture" id=22]
+[ext_resource path="res://assets/images/booga/up/up5.png" type="Texture" id=23]
+[ext_resource path="res://assets/images/booga/right/right3.png" type="Texture" id=24]
+[ext_resource path="res://assets/images/booga/left/left1.png" type="Texture" id=25]
+[ext_resource path="res://assets/images/booga/right/right4.png" type="Texture" id=26]
+[ext_resource path="res://assets/images/booga/left/left5.png" type="Texture" id=27]
+[ext_resource path="res://assets/images/booga/left/left4.png" type="Texture" id=28]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "down",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": false,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 20 ), ExtResource( 6 ), ExtResource( 28 ), ExtResource( 27 ) ],
+"loop": false,
+"name": "left",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 15 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": false,
+"name": "miss",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 24 ), ExtResource( 26 ), ExtResource( 9 ) ],
+"loop": false,
+"name": "right",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 23 ), ExtResource( 10 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "up",
+"speed": 15.0
+} ]
+
+[node name="Booga" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+script = ExtResource( 2 )
+
+[connection signal="animation_finished" from="." to="." method="_on_Booga_animation_finished"]

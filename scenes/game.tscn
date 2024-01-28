@@ -1,30 +1,67 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://scenes/Note.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scripts/Game.gd" type="Script" id=3]
-[ext_resource path="res://assets/images/GameScreen.png" type="Texture" id=4]
+[ext_resource path="res://assets/images/background/bg1.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Booga.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Note.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/King.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/musics/bgMusic.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/images/background/bg2.png" type="Texture" id=7]
+[ext_resource path="res://assets/images/background/bg3.png" type="Texture" id=8]
+[ext_resource path="res://assets/images/background/bg4.png" type="Texture" id=9]
+
+[sub_resource type="AnimatedTexture" id=1]
+frames = 4
+frame_0/texture = ExtResource( 1 )
+frame_1/texture = ExtResource( 7 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 8 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 9 )
+frame_3/delay_sec = 0.0
 
 [node name="Game" type="Node"]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 4 )
+texture = SubResource( 1 )
 
-[node name="Note0" parent="." instance=ExtResource( 1 )]
+[node name="Notes" type="Node" parent="."]
+
+[node name="Note0" parent="Notes" instance=ExtResource( 4 )]
 position = Vector2( 754, 832 )
 
-[node name="Note1" parent="." instance=ExtResource( 1 )]
+[node name="Note1" parent="Notes" instance=ExtResource( 4 )]
 position = Vector2( 852, 828 )
 
-[node name="Note2" parent="." instance=ExtResource( 1 )]
+[node name="Note2" parent="Notes" instance=ExtResource( 4 )]
 position = Vector2( 956, 832 )
 
-[node name="Note3" parent="." instance=ExtResource( 1 )]
+[node name="Note3" parent="Notes" instance=ExtResource( 4 )]
 position = Vector2( 1058, 834 )
 
+[node name="NotesKing" type="Node" parent="."]
+
+[node name="NoteKing0" parent="NotesKing" instance=ExtResource( 4 )]
+visible = false
+position = Vector2( 754, 319 )
+
+[node name="NoteKing1" parent="NotesKing" instance=ExtResource( 4 )]
+visible = false
+position = Vector2( 852, 315 )
+
+[node name="NoteKing2" parent="NotesKing" instance=ExtResource( 4 )]
+visible = false
+position = Vector2( 956, 319 )
+
+[node name="NoteKing3" parent="NotesKing" instance=ExtResource( 4 )]
+visible = false
+position = Vector2( 1058, 321 )
+
 [node name="BgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 autoplay = true
 
 [node name="StartTimer" type="Timer" parent="."]
@@ -35,27 +72,22 @@ autostart = true
 [node name="KingsSpeech" type="AudioStreamPlayer" parent="."]
 bus = "Sound"
 
-[node name="NoteKing0" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( 754, 319 )
-
-[node name="NoteKing1" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( 852, 315 )
-
-[node name="NoteKing2" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( 956, 319 )
-
-[node name="NoteKing3" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( 1058, 321 )
-
 [node name="NotesDebugger" type="Label" parent="."]
 margin_left = 721.0
 margin_top = 612.0
 margin_right = 884.0
 margin_bottom = 715.0
+
+[node name="Booga" type="Node" parent="."]
+
+[node name="Booga" parent="Booga" instance=ExtResource( 3 )]
+position = Vector2( 308, 853 )
+
+[node name="King" type="Node" parent="."]
+
+[node name="King" parent="King" instance=ExtResource( 5 )]
+position = Vector2( 1453, 671.875 )
+scale = Vector2( 1.09219, 0.851823 )
 
 [connection signal="finished" from="BgMusic" to="." method="_on_BgMusic_finished"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
