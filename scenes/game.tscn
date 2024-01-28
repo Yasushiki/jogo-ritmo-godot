@@ -1,10 +1,61 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/CircleSprite.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scripts/game.gd" type="Script" id=5]
+[ext_resource path="res://scenes/Note.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=3]
+[ext_resource path="res://assets/images/GameScreen.png" type="Texture" id=4]
 
-[node name="Game" type="Node2D"]
-script = ExtResource( 5 )
+[node name="Game" type="Node"]
+script = ExtResource( 3 )
 
-[node name="ArrowButton" parent="." instance=ExtResource( 1 )]
-position = Vector2( 747, 493 )
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+
+[node name="Note0" parent="." instance=ExtResource( 1 )]
+position = Vector2( 754, 832 )
+
+[node name="Note1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 852, 828 )
+
+[node name="Note2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 956, 832 )
+
+[node name="Note3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1058, 834 )
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="."]
+autoplay = true
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="KingsSpeech" type="AudioStreamPlayer" parent="."]
+bus = "Sound"
+
+[node name="NoteKing0" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 754, 319 )
+
+[node name="NoteKing1" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 852, 315 )
+
+[node name="NoteKing2" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 956, 319 )
+
+[node name="NoteKing3" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 1058, 321 )
+
+[node name="NotesDebugger" type="Label" parent="."]
+margin_left = 721.0
+margin_top = 612.0
+margin_right = 884.0
+margin_bottom = 715.0
+
+[connection signal="finished" from="BgMusic" to="." method="_on_BgMusic_finished"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]

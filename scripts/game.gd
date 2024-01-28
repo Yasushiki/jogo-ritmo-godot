@@ -1,163 +1,133 @@
-extends Node2D
+extends Node
 
-var pontos = 0
-var combo = 0
-
-var max_combo = 0
-var perfect = 0
-var good = 0
-var ok = 0
-var missed = 0
-
-var bpm = 115 # perguntar pro vinícius
-
-var song_position = 0.0
-var song_position_in_beats = 0
-var last_spawned_beat = 0
-var sec_per_beat = 60.0 / bpm
-
-# a quantidade de elementos desse array depende da métrica da música
-# a música de exemplo era 4x4 (eu acho), por isso ela só tinha 4
-# spawn_beat, como eu n sei sobre a nossa eu tô deixando mais genérico
-var spawn_beat = [0, 0, 1, 0]
-var spawn_beat_length = len(spawn_beat)
-
-var lane = 0
-var lanes = []
-var rand = 0
-var note = load("res://scenes/note.tscn")
-var instance
+var notes: Array = []
+var playerNotes: Array = []
+var isListening: bool = false
+var qtdInputs := 0
+var currentScore := 0
+var score := 0
+var run := 0
 
 func _ready():
 	randomize()
-	#$Conductor.play_with_beat_offset(8)
-	$Conductor.play_from_beat(100, 8)
-
-func _on_Conductor_measure(position):
-	for i in range(spawn_beat_length):
-		if position == i+1:
-			_spawn_notes(spawn_beat[i])
-			break
-
-func _on_Conductor_beat(position):
-	song_position_in_beats = position
-	if song_position_in_beats > 36:
-		spawn_beat[0] = 0
-		spawn_beat[1] = 1
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 98:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 132:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 162:
-		spawn_beat[0] = 0
-		spawn_beat[1] = 1
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 194:
-		spawn_beat[0] = 0
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 1
-	if song_position_in_beats > 228:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 258:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 0
-		spawn_beat[3] = 1
-	if song_position_in_beats > 288:
-		spawn_beat[0] = 0
-		spawn_beat[1] = 1
-		spawn_beat[2] = 0
-		spawn_beat[3] = 0
-	if song_position_in_beats > 322:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 1
-	if song_position_in_beats > 388:
-		spawn_beat[0] = 1
-		spawn_beat[1] = 0
-		spawn_beat[2] = 1
-		spawn_beat[3] = 0
-	if song_position_in_beats > 396:
-		spawn_beat[0] = 0
-		spawn_beat[1] = 1
-		spawn_beat[2] = 0
-		spawn_beat[3] = 0
-	if song_position_in_beats > 404:
-		Global.set_score(pontos)
-		Global.combo = max_combo
-		Global.perfect = perfect
-		Global.good = good
-		Global.ok = ok
-		Global.missed = missed
-
-
-# spawna uma nota em uma lane aleatória
-func _spawn_notes(to_spawn):
-	lanes = []
-	if to_spawn > 0:
-		lane = randi() % 4
-		instance = note.instance()
-		instance.initialize(lane)
-		add_child(instance)
-		lanes.append(lane)
-	if to_spawn > 1:
-		while to_spawn > 1:
-			while lanes.has(rand):
-				rand = randi() % 4
-			lane = rand
-#			lanes.append(lane)
-			print(lanes)
-			instance = note.instance()
-			instance.initialize(lane)
-			add_child(instance)
-			to_spawn -= 1
-
-func increment_score(by):
-	if by > 0:
-		combo += 1
-	else:
-		combo = 0
 	
-	if by == 3:
-		perfect += 1
-	elif by == 2:
-		good += 1
-	elif by == 1:
-		ok += 1
-	else:
-		missed += 1
+func _process(_delta):
+	if isListening:
+		if Input.is_action_just_pressed("cima"):
+			playerNotes.append(0)
+			qtdInputs += 1
+			getInputs()
+		if Input.is_action_just_pressed("direita"):
+			playerNotes.append(1)
+			qtdInputs += 1
+			getInputs()
+		if Input.is_action_just_pressed("baixo"):
+			playerNotes.append(2)
+			qtdInputs += 1
+			getInputs()
+		if Input.is_action_just_pressed("esquerda"):
+			playerNotes.append(3)
+			qtdInputs += 1
+			getInputs()
+
+func _on_BgMusic_finished() -> void:
+	$BgMusic.play()
+
+# Começar jogo 
+func _on_StartTimer_timeout() -> void:
+	game()
+
+
+## FLUXO DE JOGO ##
+func kingsChoice() -> void: 
+	# 0 = cima; 1 = direita; 2 = baixo; 3 = esquerda
+	notes = []
+	for _i in range(4):
+		notes.append(randi() % 4)
+		$NotesDebugger.text += str(notes[_i])
 	
-	# sistema de pontuação, a gente pode mudar isso depois, eu
-	# n jogo jogo de rítmo ent eu n sei como que seria bom
-	pontos += by * combo
-	$Label.text = str(pontos)
-	if combo > 0:
-		if max_combo < combo:
-			max_combo = combo
-			$Combo.text = "Novo combo: " + str(combo)
-		else:
-			$Combo.text = "Combo: " + str(combo)
+	for note in notes:
+		var variations = 2 # quantidade de variações de cada nota
+		var pathSound: String = "res://assets/musics/"+ str(randi()%variations)+str(note) +".wav"
+		$KingsSpeech.stream = load(pathSound)
+		$KingsSpeech.play()
+		var time: float = $KingsSpeech.stream.get_length() + 0.1
+		
+		yield(get_tree().create_timer(time), "timeout")
+
+func game():
+	# Faz o rei falar, e pausa o código até ele terminar
+	yield(kingsChoice(), "completed")
+	
+	# Começa a escutar os inputs e reseta a qtd de inputs
+	isListening = true
+	qtdInputs = 0
+	getInputs()
+
+func getInputs():
+	# verifica se os 4 inputs já foram informados
+	if qtdInputs == 4:
+		isListening = false
+		continueGame()
+
+func continueGame():
+	# passa pelas notas e muda o sprite delas
+	var i = 0
+	for note in playerNotes:
+		checkInputs(note, i, 0)
+		i += 1
+	
+	# mostra as teclas que o rei falou
+	i = 0
+	for note in notes:
+		var kingCurrentNote = get_node("NoteKing" + str(i))
+		kingCurrentNote.visible = true
+		checkInputs(note, i, 1)
+		i += 1
+	
+	# verifica a pontuação
+	for j in range(4):
+		if notes[j] == playerNotes[j]:
+			currentScore += 1
+	score += currentScore
+	
+	yield(get_tree().create_timer(3), "timeout")
+	
+	# rei/plateia tem a reação de acordo com seus pontos
+	if currentScore > 2:
+		pass
 	else:
-		$Combo.text = ""
+		pass
+	
+	# aumenta mais 1 na qtd de runs
+	run += 1
+	
+	# faz mais uma partida se n foram 4 partidas 
+	if run != 2:
+		resetVariables()
+		$StartTimer.start()
+	else:
+		$NotesDebugger.text = "ACABOU O JOGO! PONTUAÇÃO: " + str(score) 
 
-func reset_combo():
-	combo = 0
-	$Combo.text = ""
+func resetVariables():
+	notes = []
+	playerNotes = []
+	for i in range(4):
+		checkInputs(-1, i, 0)
+		checkInputs(-1, i, 1)
+	currentScore = 0
+	$NotesDebugger.text = ""
+## FLUXO DE JOGO ##
 
 
-
-
+func checkInputs(note, i, k):
+	var path = "Note"
+	if k:
+		path += "King"
+		
+	var currentNote = get_node(path + str(i))
+	currentNote.check(note)
+	
+	if k and note == -1:
+		currentNote.visible = false
+	

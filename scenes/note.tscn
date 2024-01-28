@@ -1,33 +1,32 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://frames/setas.tres" type="SpriteFrames" id=1]
-[ext_resource path="res://scripts/note.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/setasem título.png" type="Texture" id=1]
+[ext_resource path="res://assets/images/CircleTime.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Note.gd" type="Script" id=3]
+[ext_resource path="res://assets/images/CircleOn.png" type="Texture" id=4]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "arrow",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "miss",
+"speed": 5.0
+} ]
 
-[node name="note" type="Area2D" groups=["note"]]
-position = Vector2( 522, 320 )
-script = ExtResource( 2 )
+[node name="Note" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "idle"
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-frames = ExtResource( 1 )
-animation = "up"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Label" type="Label" parent="Node2D"]
-margin_right = 40.0
-margin_bottom = 14.0
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
