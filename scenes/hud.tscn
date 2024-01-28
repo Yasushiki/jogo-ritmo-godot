@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Hud.gd" type="Script" id=1]
 [ext_resource path="res://assets/images/MenuScreen.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/ABeeZee-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/images/background/boga.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+font_data = ExtResource( 3 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -13,26 +27,40 @@ texture = ExtResource( 2 )
 expand = true
 stretch_mode = 1
 
-[node name="Treino" type="Button" parent="."]
-margin_left = 784.0
-margin_top = 351.0
-margin_right = 1103.0
-margin_bottom = 478.0
+[node name="NewGame" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_top = 312.0
+margin_right = 200.0
+margin_bottom = 442.0
+custom_fonts/font = SubResource( 1 )
+text = "NEW GAME"
 
-[node name="NovoJogo" type="Button" parent="."]
-margin_left = 803.0
-margin_top = 199.0
-margin_right = 1073.0
-margin_bottom = 312.0
+[node name="Credits" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_top = 490.0
+margin_right = 200.0
+margin_bottom = 620.0
+custom_fonts/font = SubResource( 3 )
+text = "CREDITS"
 
-[node name="Creditos" type="Button" parent="."]
-margin_left = 851.0
-margin_top = 547.0
-margin_right = 1075.0
-margin_bottom = 630.0
+[node name="Exit" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_top = 660.0
+margin_right = 200.0
+margin_bottom = 790.0
+custom_fonts/font = SubResource( 4 )
+text = "EXIT"
 
-[node name="Sair" type="Button" parent="."]
-margin_left = 792.0
-margin_top = 669.0
-margin_right = 1142.0
-margin_bottom = 843.0
+[node name="Boga" type="Sprite" parent="."]
+position = Vector2( 846, 413 )
+texture = ExtResource( 4 )
+
+[connection signal="pressed" from="NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]

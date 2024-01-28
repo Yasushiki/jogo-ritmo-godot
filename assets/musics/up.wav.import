@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/12.wav-de5b20d943a11884950a66b961bf1adf.sample"
+path="res://.import/up.wav-c0139c0f16ceb25675191d23662b97e0.sample"
 
 [deps]
 
-source_file="res://assets/musics/12.wav"
-dest_files=[ "res://.import/12.wav-de5b20d943a11884950a66b961bf1adf.sample" ]
+source_file="res://assets/musics/up.wav"
+dest_files=[ "res://.import/up.wav-c0139c0f16ceb25675191d23662b97e0.sample" ]
 
 [params]
 

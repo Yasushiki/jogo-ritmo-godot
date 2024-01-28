@@ -14,24 +14,34 @@ func _ready():
 	randomize()
 	kingNode = get_node("King/King")
 	boogaNode = get_node("Booga/Booga")
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), 3)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Player"), 6)
 	
 func _process(_delta):
 	if isListening:
 		if Input.is_action_just_pressed("cima"):
 			playerNotes.append(0)
 			qtdInputs += 1
+			$PlayerSpeech.stream = load("res://assets/musics/up.wav")
+			$PlayerSpeech.play()
 			getInputs()
 		if Input.is_action_just_pressed("direita"):
 			playerNotes.append(1)
 			qtdInputs += 1
+			$PlayerSpeech.stream = load("res://assets/musics/right.wav")
+			$PlayerSpeech.play()
 			getInputs()
 		if Input.is_action_just_pressed("baixo"):
 			playerNotes.append(2)
 			qtdInputs += 1
+			$PlayerSpeech.stream = load("res://assets/musics/down.wav")
+			$PlayerSpeech.play()
 			getInputs()
 		if Input.is_action_just_pressed("esquerda"):
 			playerNotes.append(3)
 			qtdInputs += 1
+			$PlayerSpeech.stream = load("res://assets/musics/left.wav")
+			$PlayerSpeech.play()
 			getInputs()
 
 func _on_BgMusic_finished() -> void:
@@ -43,23 +53,6 @@ func _on_StartTimer_timeout() -> void:
 
 
 ## FLUXO DE JOGO ##
-func kingsChoice() -> void: 
-	# 0 = cima; 1 = direita; 2 = baixo; 3 = esquerda
-	notes = []
-	for _i in range(4):
-		notes.append(randi() % 4)
-		$NotesDebugger.text += str(notes[_i])
-	
-	for note in notes:
-		var variations = 2 # quantidade de variações de cada nota
-		var pathSound: String = "res://assets/musics/"+ str(randi()%variations)+str(note) +".wav"
-		$KingsSpeech.stream = load(pathSound)
-		$KingsSpeech.play()
-		kingNode.speak()
-		var time: float = $KingsSpeech.stream.get_length() + 0.1
-		
-		yield(get_tree().create_timer(1.0), "timeout")
-
 func game():
 	# Faz o rei falar, e pausa o código até ele terminar
 	yield(kingsChoice(), "completed")
@@ -69,6 +62,21 @@ func game():
 	boogaNode.isListening = true
 	qtdInputs = 0
 	getInputs()
+
+func kingsChoice() -> void: 
+	# 0 = cima; 1 = direita; 2 = baixo; 3 = esquerda
+	notes = []
+	for _i in range(4):
+		notes.append(randi() % 4)
+	
+	for note in notes:
+		var variations = 2 # quantidade de variações de cada nota
+		var pathSound: String = "res://assets/musics/"+ str(note) + str(randi()%variations) + ".wav"
+		$KingsSpeech.stream = load(pathSound)
+		$KingsSpeech.play()
+		kingNode.speak()
+		
+		yield(get_tree().create_timer(1.0), "timeout")
 
 func getInputs():
 	# verifica se os 4 inputs já foram informados
@@ -100,11 +108,15 @@ func continueGame():
 	run += 1
 	
 	# faz mais uma partida se n foram 4 partidas 
-	if run != 3:
+	if run != 4:
 		resetVariables()
 		$StartTimer.start()
 	else:
-		$NotesDebugger.text = "ACABOU O JOGO! PONTUAÇÃO: " + str(score) 
+		Global.score = score
+		if score < 10:
+			get_tree().change_scene("res://scenes/GameOverScreen.tscn")
+		else:
+			pass
 
 func compareNotes():
 	# verifica a pontuação
@@ -128,7 +140,6 @@ func resetVariables():
 		checkInputs(-1, i, 0)
 		checkInputs(-1, i, 1)
 	currentScore = 0
-	$NotesDebugger.text = ""
 ## FLUXO DE JOGO ##
 
 

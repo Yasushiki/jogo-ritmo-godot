@@ -70,13 +70,7 @@ one_shot = true
 autostart = true
 
 [node name="KingsSpeech" type="AudioStreamPlayer" parent="."]
-bus = "Sound"
-
-[node name="NotesDebugger" type="Label" parent="."]
-margin_left = 721.0
-margin_top = 612.0
-margin_right = 884.0
-margin_bottom = 715.0
+bus = "King"
 
 [node name="Booga" type="Node" parent="."]
 
@@ -88,6 +82,9 @@ position = Vector2( 308, 853 )
 [node name="King" parent="King" instance=ExtResource( 5 )]
 position = Vector2( 1453, 671.875 )
 scale = Vector2( 1.09219, 0.851823 )
+
+[node name="PlayerSpeech" type="AudioStreamPlayer" parent="."]
+bus = "Player"
 
 [connection signal="finished" from="BgMusic" to="." method="_on_BgMusic_finished"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
