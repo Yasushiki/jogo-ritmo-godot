@@ -116,7 +116,7 @@ func continueGame():
 		if score < 10:
 			get_tree().change_scene("res://scenes/GameOverScreen.tscn")
 		else:
-			pass
+			get_tree().change_scene("res://scenes/GameWinScreen.tscn")
 
 func compareNotes():
 	# verifica a pontuação

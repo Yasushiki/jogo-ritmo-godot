@@ -81,7 +81,7 @@ text = "MENU"
 position = Vector2( 661, 631 )
 frames = SubResource( 1 )
 animation = "win"
-frame = 1
+frame = 3
 playing = true
 
 [connection signal="pressed" from="ButtonMenu" to="." method="_on_ButtonMenu_pressed"]
